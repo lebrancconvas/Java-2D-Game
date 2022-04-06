@@ -23,8 +23,11 @@ public class App
 
 class BasicGame extends JPanel
 {
+    final int SCREEN_WIDTH = 800;
+    final int SCREEN_HEIGHT = 600;
+
     public BasicGame()
     {
-        this.setPreferredSize(new Dimension(800, 600));
+        this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
     }
 }
