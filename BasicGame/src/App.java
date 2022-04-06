@@ -1,6 +1,9 @@
 import javax.swing.*;
+import javax.imageio.*;
 import java.awt.*;
 import java.lang.*;
+import java.io.*;
+import java.awt.image.*;
 
 public class App
 {
@@ -26,8 +29,8 @@ public class App
 
 class BasicGame extends JPanel
 {
-    final int SCREEN_WIDTH = 800;
-    final int SCREEN_HEIGHT = 600;
+    private final int SCREEN_WIDTH = 800;
+    private final int SCREEN_HEIGHT = 600;
 
     public BasicGame()
     {
@@ -43,9 +46,10 @@ class BasicGame extends JPanel
         PaintBrush myBrush = new PaintBrush(g);
 
         myBrush.drawSky();
+        myBrush.drawGrass();
         myBrush.drawSun();
-        // myBrush.drawMountain();
         myBrush.drawTree();
+        myBrush.drawImage("Cycling", 200, 500); 
     }
 }
 
@@ -56,11 +60,54 @@ class PaintBrush
     // Set Color 
     private static final Color skyblue = new Color(77, 237, 255);
     private static final Color orangesun = new Color(255, 178, 44);
+    private static final Color greenmint = new Color(99, 224, 159);
+    private static final Color goldensun = new Color(255, 152, 34);
+    private static final Color ALIZARIN_CRIMSON = new Color(78, 21, 0);
+    private static final Color BRIGHT_RED = new Color(219, 0, 0);
+    private static final Color CADMIUM_YELLOW = new Color(255, 236, 0);
+    private static final Color DARK_SIENNA = new Color(95, 46, 31);
+    private static final Color INDIAN_YELLOW = new Color(255, 184, 0);
+    private static final Color MIDNIGHT_BLACK = new Color(0, 0, 0);
+    private static final Color PHTHALO_BLUE = new Color(12, 0, 64);
+    private static final Color PHTHALO_GREEN = new Color(16, 46, 60);
+    private static final Color PRUSSIAN_BLUE = new Color(2, 30, 68);
+    private static final Color SAP_GREEN = new Color(10, 52, 16);
+    private static final Color TITANIUM_WHITE = new Color(255, 255, 255);
+    private static final Color VAN_DYKE_BROWN = new Color(34, 27, 21);
+    private static final Color YELLOW_OCHRE = new Color(199, 155, 0);
 
     // Init Paint Brush. 
     public PaintBrush(Graphics graphics)
     {
         g = graphics;
+    }
+
+    // Color Algorithm.
+    private Color blend(Color c1, Color c2, float ratio) 
+    {
+        if ( ratio > 1f ) ratio = 1f;
+        else if ( ratio < 0f ) ratio = 0f;
+        float iRatio = 1.0f - ratio;
+    
+        int i1 = c1.getRGB();
+        int i2 = c2.getRGB();
+    
+        int a1 = (i1 >> 24 & 0xff);
+        int r1 = ((i1 & 0xff0000) >> 16);
+        int g1 = ((i1 & 0xff00) >> 8);
+        int b1 = (i1 & 0xff);
+    
+        int a2 = (i2 >> 24 & 0xff);
+        int r2 = ((i2 & 0xff0000) >> 16);
+        int g2 = ((i2 & 0xff00) >> 8);
+        int b2 = (i2 & 0xff);
+    
+        int a = (int)((a1 * iRatio) + (a2 * ratio));
+        int r = (int)((r1 * iRatio) + (r2 * ratio));
+        int g = (int)((g1 * iRatio) + (g2 * ratio));
+        int b = (int)((b1 * iRatio) + (b2 * ratio));
+    
+        return new Color( a << 24 | r << 16 | g << 8 | b );
     }
 
     // Shape Brush. 
@@ -109,13 +156,25 @@ class PaintBrush
     // Drawing Stuff. 
     public void drawSky()
     {
-        g.setColor(skyblue);
-        g.fillRect(0, 0, 800, 200);
+        Color skyFarMix = blend(PHTHALO_BLUE, skyblue, 0.5f);
+        Color skyNearMix = blend(skyblue, TITANIUM_WHITE, 0.16f);
+
+        GradientPaint grassMix = new GradientPaint(0, 0, skyFarMix, 0, 300, skyNearMix);
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setPaint(grassMix);
+        g2.fillRect(0, 0, 800, 200);
+    }
+
+    public void drawFloor()
+    {
+        brushRect(greenmint, 0, 200, 800, 400);
     }
 
     public void drawSun()
     {
-        brushCircle(orangesun, 500, 70, 100);
+        brushCircle(orangesun, 480, 35, 140);
+        brushCircle(goldensun, 500, 55, 100);
     }
 
     public void drawMountain()
@@ -140,6 +199,31 @@ class PaintBrush
         {
             brushRect(Color.RED, rootX, rootY, rootWidth, rootHeight); // Draw Root
             brushIsoTriangle(Color.GREEN, leafX, leafY, leafWidth, leafHeight); // Draw Leaf 
+        }
+    }
+
+    public void drawGrass()
+    {
+        Color grassFarMix = blend(SAP_GREEN, PHTHALO_GREEN, 0.5f);
+        Color grassNearMix = blend(SAP_GREEN, TITANIUM_WHITE, 0.16f);
+
+        GradientPaint grassMix = new GradientPaint(0, 0, grassFarMix, 0, 700, grassNearMix);  
+
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setPaint(grassMix);
+        g2.fillRect(0, 200, 800, 400);
+    }
+
+    public void drawImage(String fileName, int xAxis, int yAxis)
+    {
+        try
+        {
+            BufferedImage image = ImageIO.read(new File("assets/image/" + fileName + ".png"));
+            g.drawImage(image, xAxis, yAxis, null); 
+        }
+        catch(IOException e)
+        {
+            System.out.println("Error opening image file: " + e.getMessage());
         }
     }
 }
