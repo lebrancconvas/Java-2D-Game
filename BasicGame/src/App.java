@@ -31,5 +31,6 @@ class BasicGame extends JPanel
     public BasicGame()
     {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+        this.setBackground(Color.BLACK); 
     }
 }
