@@ -49,6 +49,9 @@ class PaintBrush
 {
     private Graphics g;
 
+    // Set Color 
+    Color skyblue = new Color(77, 237, 255);
+
     public PaintBrush(Graphics graphics)
     {
         g = graphics;
@@ -56,7 +59,7 @@ class PaintBrush
 
     public void drawSky()
     {
-        g.setColor(new Color(77, 237, 255));
+        g.setColor(skyblue);
         g.fillRect(0, 0, 800, 200);
     }
 }
