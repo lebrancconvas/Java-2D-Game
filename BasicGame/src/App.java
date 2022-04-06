@@ -17,6 +17,8 @@ public class App
 
         // Fit the window size around the component. 
         window.pack();
+        window.setResizable(false);
+        window.setLocationRelativeTo(null);
         window.setVisible(true);
     }
 }
