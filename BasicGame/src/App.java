@@ -50,6 +50,7 @@ class BasicGame extends JPanel
         myBrush.drawSun();
         myBrush.drawTree();
         myBrush.drawImage("Cycling", 200, 500); 
+        myBrush.drawImage("Cycling", 500, 500); 
     }
 }
 
