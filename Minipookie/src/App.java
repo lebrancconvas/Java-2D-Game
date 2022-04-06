@@ -1,7 +1,9 @@
 import javax.swing.JFrame;
 
-public class App {
-    public static void main(String[] args) throws Exception {
+public class App 
+{
+    public static void main(String[] args) throws Exception 
+    {
         JFrame window = new JFrame();
 
         String windowTitle = "Special Unit Magician"; 
@@ -10,8 +12,9 @@ public class App {
         window.setResizable(false);
         window.setTitle(windowTitle); 
 
-        GamePanel gamePanel = new GamePanel();
-        window.add(gamePanel);
+        // Add Game to Screen. 
+        Minipookie minipookie = new Minipookie();
+        window.add(minipookie);
 
         window.pack();
 

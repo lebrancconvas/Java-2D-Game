@@ -1,7 +1,8 @@
 import javax.swing.JPanel;
 import java.awt.*;
 
-public class Minipookie extends JPanel implements Runnable {
+public class Minipookie extends JPanel implements Runnable 
+{
 	final int originalTileSize = 16;
 	final int scale = 3;
 
@@ -24,7 +25,8 @@ public class Minipookie extends JPanel implements Runnable {
 	int playerY = 100;
 	int playerSpeed = 5;
 
-	public Minipookie() {
+	public Minipookie() 
+	{
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
@@ -32,53 +34,69 @@ public class Minipookie extends JPanel implements Runnable {
 		this.setFocusable(true);
 	}
 
-	public void startGameThread() {
+	public void startGameThread() 
+	{
 		gameThread = new Thread(this);
 		gameThread.start();
 	}
 
 	// Game Loop 
 	@Override
-	public void run() {
+	public void run() 
+	{
 		double drawInterval = 1000000000 / FPS;
 		double nextDrawTime = System.nanoTime() + drawInterval;
 
-		while(gameThread != null) {
+		while(gameThread != null) 
+		{
 			// Writing your game loop. 
 			update();
 
 			repaint();
 
-			try {
+			try 
+			{
 				double remainingTime = nextDrawTime - System.nanoTime();
 				remainingTime = remainingTime / 1000000;
 
-				if(remainingTime < 0) {
+				if(remainingTime < 0) 
+				{
 					remainingTime = 0;
 				}
 
 				Thread.sleep((long) remainingTime); 
 
  				nextDrawTime += drawInterval;
-			} catch (InterruptedException e) {
+			} 
+			catch (InterruptedException e) 
+			{
 				e.printStackTrace(); 
 			}
 		}
 	}
 
-	public void update() {
-		if(keyH.upKey == true) {
+	public void update() 
+	{
+		if(keyH.upKey == true) 
+		{
 			playerY -= playerSpeed;
-		} else if(keyH.downKey == true) {
+		} 
+		else if(keyH.downKey == true) 
+		{
 			playerY += playerSpeed;
-		} else if(keyH.leftKey == true) {
+		} 
+		else if(keyH.leftKey == true) 
+		{
 			playerX -= playerSpeed;
-		} else if(keyH.rightKey == true) {
+		} 
+		else if(keyH.rightKey == true) 
+		{
 			playerX += playerSpeed; 
 		}
 	}
 
-	public void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g) 
+	{
 		super.paintComponent(g);
 
 		Graphics2D g2 = (Graphics2D) g;
