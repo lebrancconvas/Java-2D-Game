@@ -42,6 +42,7 @@ class BasicGame extends JPanel
         PaintBrush myBrush = new PaintBrush(g);
 
         myBrush.drawSky();
+        myBrush.drawSun();
     }
 }
 
@@ -51,6 +52,7 @@ class PaintBrush
 
     // Set Color 
     Color skyblue = new Color(77, 237, 255);
+    Color orangesun = new Color(255, 178, 44);
 
     public PaintBrush(Graphics graphics)
     {
@@ -61,5 +63,12 @@ class PaintBrush
     {
         g.setColor(skyblue);
         g.fillRect(0, 0, 800, 200);
+    }
+
+    public void drawSun()
+    {
+        int radius = 100;
+        g.setColor(orangesun);
+        g.fillOval(500, 70, radius, radius);
     }
 }
