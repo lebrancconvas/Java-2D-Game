@@ -33,4 +33,15 @@ class BasicGame extends JPanel
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.BLACK); 
     }
+
+    @Override
+    protected void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        g.setColor(Color.WHITE);
+        g.fillRect(100, 100, 100, 100);
+
+        g.setColor(new Color(100, 0, 255));
+        g.fillOval(500, 100, 200, 200);
+    }
 }
