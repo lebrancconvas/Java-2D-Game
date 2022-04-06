@@ -38,10 +38,25 @@ class BasicGame extends JPanel
     protected void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        g.setColor(Color.WHITE);
-        g.fillRect(100, 100, 100, 100);
 
-        g.setColor(new Color(100, 0, 255));
-        g.fillOval(500, 100, 200, 200);
+        PaintBrush myBrush = new PaintBrush(g);
+
+        myBrush.drawSky();
+    }
+}
+
+class PaintBrush
+{
+    private Graphics g;
+
+    public PaintBrush(Graphics graphics)
+    {
+        g = graphics;
+    }
+
+    public void drawSky()
+    {
+        g.setColor(new Color(77, 237, 255));
+        g.fillRect(0, 0, 800, 200);
     }
 }
