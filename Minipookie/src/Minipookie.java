@@ -1,7 +1,7 @@
 import javax.swing.JPanel;
 import java.awt.*;
 
-public class GamePanel extends JPanel implements Runnable {
+public class Minipookie extends JPanel implements Runnable {
 	final int originalTileSize = 16;
 	final int scale = 3;
 
@@ -24,7 +24,7 @@ public class GamePanel extends JPanel implements Runnable {
 	int playerY = 100;
 	int playerSpeed = 5;
 
-	public GamePanel() {
+	public Minipookie() {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
@@ -57,9 +57,9 @@ public class GamePanel extends JPanel implements Runnable {
 					remainingTime = 0;
 				}
 
-				Thread.sleep((long) remainingTime);
+				Thread.sleep((long) remainingTime); 
 
-				nextDrawTime += drawInterval;
+ 				nextDrawTime += drawInterval;
 			} catch (InterruptedException e) {
 				e.printStackTrace(); 
 			}
